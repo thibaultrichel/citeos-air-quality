@@ -3,4 +3,4 @@ data/opendata_txt_2020.zip
 /AirQualityUI/venv/
 /AirQualityUI/.idea/
 /AirQualityUI/__pycache__/
-
+.idea/

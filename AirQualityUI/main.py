@@ -17,6 +17,8 @@ class CiteosVision(QMainWindow):
 
         self.WIDTH = 1300
         self.HEIGHT = 700
+        self.csvUrl = "https://raw.githubusercontent.com/thibaultrichel/citeos-air-quality/main/data/final/merged" \
+                      "-final.csv "
 
         self.setFixedSize(self.WIDTH, self.HEIGHT)
         self.setWindowTitle("Citeos Demo")
@@ -26,15 +28,15 @@ class CiteosVision(QMainWindow):
             self.WIDTH, self.HEIGHT
         )
 
-        self.titleFont = MyFont(32, True, False, True)
-        self.underlineFont = MyFont(22, False, False, True)
-        self.basicFont = MyFont(22, False, False, False)
-        self.italicFont = MyFont(22, False, True, False)
+        self.titleFont = MyFont(24, True, False, True)
+        self.underlineFont = MyFont(16, False, False, True)
+        self.basicFont = MyFont(16, False, False, False)
+        self.italicFont = MyFont(16, False, True, False)
         self.set_basic_ui()
 
         self.lastDate = "Please load data to display last date"
         self.dateLabel = QLabel(self.lastDate, self)
-        self.dateLabel.setGeometry(185, 100, 500, 25)
+        self.dateLabel.setGeometry(190, 100, 500, 25)
         self.dateLabel.setFont(self.italicFont)
 
         self.btnRecoltData = QPushButton("Récolter les données", self)
@@ -42,8 +44,7 @@ class CiteosVision(QMainWindow):
 
         self.btnUploadData = QPushButton("Charger les données", self)
         self.btnUploadData.setGeometry(220, 140, 200, 50)
-        self.btnUploadData.clicked.connect(lambda: self.csvToTable(
-            "/Users/thibaultrichel/Desktop/JupyterLab/ProjetCITEOS/data/final/merged-final.csv"))
+        self.btnUploadData.clicked.connect(lambda: self.csvToTable(self.csvUrl))
 
         self.columnsNames = ["Date", "PM10", "PM2.5", "NO2", "SO2", "NO", "NOX", "O3", "Temperature", "Wind speed",
                              "Humidity", "Pressure", "Wind direction", "Weather event", "ATMO"]
@@ -92,8 +93,8 @@ class CiteosVision(QMainWindow):
                 idx = row_values.index(val)
                 self.table.setItem(i, idx, QTableWidgetItem(str(val)))
                 self.table.item(i, idx).setFlags(Qt.ItemIsEnabled)
-        self.autoResizeTable()
         self.dateLabel.setText(self.getLastDate())
+        self.autoResizeTable()
 
     def getLastDate(self):
         lastDate = self.table.item(self.table.rowCount() - 1, 0).text()
