@@ -4,6 +4,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from myfont import MyFont
 import pandas as pd
+from utils_model import getModel
 
 
 class CiteosVision(QMainWindow):
