@@ -2,7 +2,6 @@ import sys
 import pathlib
 import numpy as np
 import pandas as pd
-from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from platform import system
 from PyQt5.QtWidgets import *
@@ -18,16 +17,16 @@ class CiteosVision(QMainWindow):
 
         desktop = QApplication.desktop()
         screenRect = desktop.screenGeometry()
-        screenHeight = screenRect.height()
-        screenWidth = screenRect.width()
+        self.screenHeight = screenRect.height()
+        self.screenWidth = screenRect.width()
         self.WIDTH = 500
         self.HEIGHT = 200
 
         self.setFixedSize(self.WIDTH, self.HEIGHT)
         self.setWindowTitle("CiteosVision")
         self.setGeometry(
-            round(screenWidth / 2 - self.WIDTH / 2),
-            round(screenHeight / 2 - self.HEIGHT / 2),
+            round(self.screenWidth / 2 - self.WIDTH / 2),
+            round(self.screenHeight / 2 - self.HEIGHT / 2),
             self.WIDTH, self.HEIGHT
         )
 
@@ -39,7 +38,7 @@ class CiteosVision(QMainWindow):
             titleFontSize = 28
             baseFontSize = 20
         else:  # Linux or Windows
-            titleFontSize = 22
+            titleFontSize = 20
             baseFontSize = 12
         self.titleFont = MyFont(titleFontSize, True, False, True)
         self.underlineFont = MyFont(baseFontSize, False, False, True)
@@ -97,13 +96,12 @@ class CiteosVision(QMainWindow):
         X_test = np.expand_dims(X_test, axis=0)
         return X_test
 
-    def displayPredictions(self):
+    def getPredictions(self):
         X_test = self.formatPredictionData()
         y_pred = getPredictions(self.modelPath, X_test)
         value = np.round(y_pred[0][0], 2)
-        message = f"ATMO index : {str(value)}"
-        color, icon = getColorAndIcon(value)
-        print(value, color)
+        color = getColorAndIcon(value)
+        return value, color
 
 
 if __name__ == '__main__':

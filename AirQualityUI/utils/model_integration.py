@@ -1,7 +1,7 @@
 import os
+from PyQt5.QtGui import QPixmap
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from keras.models import load_model
-from PyQt5.QtGui import QPixmap
 
 
 weather_event_cat = {
@@ -16,29 +16,32 @@ wind_dir_cat = {
     'NNE': 12, 'NO': 13, 'SSE': 14, 'SE': 15, 'ESE': 16
 }
 
+label_positions = {i+1: (40 + i * 75, 130) for i in range(6)}
+advices = {
+    1: "Bonne qualité de l'air :)",
+    2: "Qualité de l'air moyenne, privilégiez les transports",
+    3: "Qualité de l'air dégradé, évitez de prendre votre voiture",
+    4: "Mauvaise qualité de l'air, ne prenez pas votre voiture",
+    5: "Très mauvaise qualité de l'air, attention pour votre santé",
+    6: "Qualité de l'air excrécrable, mettez un masque"
+}
+
 
 def getColorAndIcon(value):
     color = ""
-    icon = None
     if 0 < value <= 1:
-        color = "green"
-        icon = QPixmap("../images/icon-good.png")
-    elif 1 <= value < 2:
-        color = "blue"
-        icon = QPixmap("../images/icon-ok.png")
-    elif 2 <= value < 3:
-        color = "rgb(255, 212, 51)"
-        icon = QPixmap("../images/icon-warning-ok.png")
-    elif 3 <= value < 4:
-        color = "rgb(255, 131, 50)"
-        icon = QPixmap("../images/icon-warning.png")
-    elif 4 <= value < 5:
+        color = "cyan"
+    elif 1 < value <= 2:
+        color = "lime"
+    elif 2 < value <= 3:
+        color = "yellow"
+    elif 3 < value <= 4:
+        color = "orange"
+    elif 4 < value <= 5:
         color = "red"
-        icon = QPixmap("../images/icon-bad.png")
-    elif value >= 5:
+    elif value > 5:
         color = "purple"
-        icon = QPixmap("../../images/icon-rlybad.png")
-    return color, icon
+    return color
 
 
 def formatDataframe(df):
