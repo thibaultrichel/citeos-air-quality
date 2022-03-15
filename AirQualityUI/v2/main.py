@@ -2,6 +2,7 @@ import sys
 import pathlib
 import numpy as np
 import pandas as pd
+from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from platform import system
 from PyQt5.QtWidgets import *
@@ -67,7 +68,7 @@ class CiteosVision(QMainWindow):
 
     def set_basic_ui(self):
         title = QLabel("CiteosVision", self)
-        title.setGeometry(round(self.WIDTH / 2 - 200 / 2), 10, 200, 40)
+        title.setGeometry(round(self.WIDTH / 2 - 200 / 2), 0, 200, 40)
         title.setAlignment(Qt.AlignCenter)
         title.setFont(self.titleFont)
 
@@ -77,9 +78,21 @@ class CiteosVision(QMainWindow):
         labelUser.setFont(self.basicFont)
 
         labelVersion = QLabel(f"version: {self.version}", self)
-        labelVersion.setGeometry(1, 1, 63, 10)
+        labelVersion.setGeometry(1, self.HEIGHT - 12, 63, 10)
         labelVersion.setFont(MyFont(10, False, False, False))
         labelVersion.setStyleSheet("color: grey")
+
+        logoCiteos = QLabel(self)
+        pixmapCiteos = QPixmap('../../images/citeos.resized.png')
+        logoCiteos.setPixmap(pixmapCiteos)
+        logoCiteos.resize(pixmapCiteos.width(), pixmapCiteos.height())
+        logoCiteos.setGeometry(0, 0, pixmapCiteos.width(), pixmapCiteos.height())
+
+        logoEsme = QLabel(self)
+        pixmapEsme = QPixmap("../../images/esme.resized.png")
+        logoEsme.setPixmap(pixmapEsme)
+        logoEsme.resize(pixmapEsme.width(), pixmapEsme.height())
+        logoEsme.setGeometry(self.WIDTH - pixmapEsme.width(), 0, pixmapEsme.width(), pixmapEsme.height())
 
     def openTechWindow(self):
         self.techWindow = TechWindow(self)

@@ -33,7 +33,7 @@ class CiteosVision(QMainWindow):
         self.version = pathlib.Path("./main.py").parent.absolute().__str__().split("/")[-1]
         self.modelPath = "/home/thibault/Bureau/citeos-air-quality/models/LSTM_multi_with_target.h5"
         self.csvUrl = "https://raw.githubusercontent.com/thibaultrichel/citeos-air-quality/main/data/final/merged" \
-                      "-final.csv "
+                      "-final.csv"
         self.columnsNames = ["Date", "PM10", "PM2.5", "NO2", "SO2", "NO", "NOX", "O3", "Temperature", "Wind speed",
                              "Humidity", "Pressure", "Wind direction", "Weather event", "ATMO"]
         self.df = None

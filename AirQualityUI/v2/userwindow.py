@@ -2,7 +2,7 @@ import numpy as np
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from AirQualityUI.utils.model_integration import label_positions, advices
+from AirQualityUI.utils.model_integration import label_positions, advices, colors
 
 
 class UserWindow(QMainWindow):
@@ -25,7 +25,6 @@ class UserWindow(QMainWindow):
 
         self.set_basic_ui()
 
-        colors = ["cyan", "lime", "yellow", "orange", "red", "purple"]
         self.rectangles = {}
         for i, c in enumerate(colors):
             rect = QLabel(self)

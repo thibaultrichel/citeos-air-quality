@@ -10,12 +10,11 @@ weather_event_cat = {
 }
 
 atmo_cat = {'bon': 1, 'moyen': 2, 'dégradé': 3, 'mauvais': 4, "très mauvais": 5, "extrêmement mauvais": 6}
-
+colors = ["cyan", "lime", "yellow", "orange", "red", "purple"]
 wind_dir_cat = {
     'SO': 1, 'O': 2, 'SSO': 3, 'N': 4, 'S': 5, 'NE': 6, 'OSO': 7, 'NNO': 8, 'ONO': 9, 'ENE': 10, 'E': 11,
     'NNE': 12, 'NO': 13, 'SSE': 14, 'SE': 15, 'ESE': 16
 }
-
 label_positions = {i+1: (40 + i * 75, 130) for i in range(6)}
 advices = {
     1: "Bonne qualité de l'air :)",
