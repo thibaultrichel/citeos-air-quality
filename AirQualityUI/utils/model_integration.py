@@ -1,6 +1,7 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from keras.models import load_model
+from PyQt5.QtGui import QPixmap
 
 
 weather_event_cat = {
@@ -14,6 +15,30 @@ wind_dir_cat = {
     'SO': 1, 'O': 2, 'SSO': 3, 'N': 4, 'S': 5, 'NE': 6, 'OSO': 7, 'NNO': 8, 'ONO': 9, 'ENE': 10, 'E': 11,
     'NNE': 12, 'NO': 13, 'SSE': 14, 'SE': 15, 'ESE': 16
 }
+
+
+def getColorAndIcon(value):
+    color = ""
+    icon = None
+    if 0 < value <= 1:
+        color = "green"
+        icon = QPixmap("../images/icon-good.png")
+    elif 1 <= value < 2:
+        color = "blue"
+        icon = QPixmap("../images/icon-ok.png")
+    elif 2 <= value < 3:
+        color = "rgb(255, 212, 51)"
+        icon = QPixmap("../images/icon-warning-ok.png")
+    elif 3 <= value < 4:
+        color = "rgb(255, 131, 50)"
+        icon = QPixmap("../images/icon-warning.png")
+    elif 4 <= value < 5:
+        color = "red"
+        icon = QPixmap("../images/icon-bad.png")
+    elif value >= 5:
+        color = "purple"
+        icon = QPixmap("../../images/icon-rlybad.png")
+    return color, icon
 
 
 def formatDataframe(df):

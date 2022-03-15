@@ -2,12 +2,14 @@ import sys
 import pathlib
 import numpy as np
 import pandas as pd
-from AirQualityUI.utils.myfont import MyFont
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from platform import system
 from PyQt5.QtWidgets import *
-from AirQualityUI.utils.model_integration import getPredictions, formatDataframe
+from techwindow import TechWindow
+from userwindow import UserWindow
+from AirQualityUI.utils.myfont import MyFont
+from AirQualityUI.utils.model_integration import getPredictions, formatDataframe, getColorAndIcon
 
 
 class CiteosVision(QMainWindow):
@@ -18,23 +20,20 @@ class CiteosVision(QMainWindow):
         screenRect = desktop.screenGeometry()
         screenHeight = screenRect.height()
         screenWidth = screenRect.width()
-
-        self.running_system = system()
-        self.version = pathlib.Path("main.py").parent.absolute().__str__().split("/")[-1]
         self.WIDTH = 500
         self.HEIGHT = 200
-        self.modelPath = "/home/thibault/Bureau/citeos-air-quality/models/LSTM_multi_with_target.h5"
-        self.csvUrl = "https://raw.githubusercontent.com/thibaultrichel/citeos-air-quality/main/data/final/merged" \
-                      "-final.csv "
-        self.df = None
 
         self.setFixedSize(self.WIDTH, self.HEIGHT)
-        self.setWindowTitle("Citeos Demo")
+        self.setWindowTitle("CiteosVision")
         self.setGeometry(
             round(screenWidth / 2 - self.WIDTH / 2),
             round(screenHeight / 2 - self.HEIGHT / 2),
             self.WIDTH, self.HEIGHT
         )
+
+        self.techWindow, self.userWindow = None, None
+        self.running_system = system()
+        self.version = pathlib.Path("main.py").parent.absolute().__str__().split("/")[-1]
 
         if self.running_system == "Darwin":  # MacOS
             titleFontSize = 28
@@ -51,9 +50,21 @@ class CiteosVision(QMainWindow):
 
         self.btnTechnicalWindow = QPushButton("Technical", self)
         self.btnTechnicalWindow.setGeometry(50, 130, 200, 40)
+        self.btnTechnicalWindow.clicked.connect(self.openTechWindow)
 
         self.btnUserWindow = QPushButton("User", self)
         self.btnUserWindow.setGeometry(self.WIDTH - 240, 130, 200, 40)
+        self.btnUserWindow.clicked.connect(self.openUserWindow)
+
+        self.modelPath = "/home/thibault/Bureau/citeos-air-quality/models/LSTM_multi_with_target.h5"
+        self.csvUrl = "https://raw.githubusercontent.com/thibaultrichel/citeos-air-quality/main/data/final/merged" \
+                      "-final.csv"
+        self.columnsNames = ["Date", "PM10", "PM2.5", "NO2", "SO2", "NO", "NOX", "O3", "Temperature", "Wind speed",
+                             "Humidity", "Pressure", "Wind direction", "Weather event", "ATMO"]
+        self.df = pd.read_csv(self.csvUrl, sep=';').dropna()
+        self.df = self.df[['date', 'PM10', 'PM25', 'NO2', 'SO2', 'NO', 'NOX', 'O3', 'temp', 'wind_speed', 'wind_dir',
+                           'hum', 'press', 'weather_event', 'ATMO']]
+        self.df = formatDataframe(self.df)
 
     def set_basic_ui(self):
         title = QLabel("CiteosVision", self)
@@ -70,6 +81,29 @@ class CiteosVision(QMainWindow):
         labelVersion.setGeometry(1, 1, 63, 10)
         labelVersion.setFont(MyFont(10, False, False, False))
         labelVersion.setStyleSheet("color: grey")
+
+    def openTechWindow(self):
+        self.techWindow = TechWindow(self)
+        self.techWindow.show()
+        self.hide()
+
+    def openUserWindow(self):
+        self.userWindow = UserWindow(self)
+        self.userWindow.show()
+        self.hide()
+
+    def formatPredictionData(self):
+        X_test = self.df[-120:]
+        X_test = np.expand_dims(X_test, axis=0)
+        return X_test
+
+    def displayPredictions(self):
+        X_test = self.formatPredictionData()
+        y_pred = getPredictions(self.modelPath, X_test)
+        value = np.round(y_pred[0][0], 2)
+        message = f"ATMO index : {str(value)}"
+        color, icon = getColorAndIcon(value)
+        print(value, color)
 
 
 if __name__ == '__main__':

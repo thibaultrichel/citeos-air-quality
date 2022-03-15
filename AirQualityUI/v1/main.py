@@ -18,15 +18,8 @@ class CiteosVision(QMainWindow):
         screenRect = desktop.screenGeometry()
         screenHeight = screenRect.height()
         screenWidth = screenRect.width()
-
-        self.running_system = system()
-        self.version = pathlib.Path("./main.py").parent.absolute().__str__().split("/")[-1]
         self.WIDTH = 1200
         self.HEIGHT = 650
-        self.modelPath = "/home/thibault/Bureau/citeos-air-quality/models/LSTM_multi_with_target.h5"
-        self.csvUrl = "https://raw.githubusercontent.com/thibaultrichel/citeos-air-quality/main/data/final/merged" \
-                      "-final.csv "
-        self.df = None
 
         self.setFixedSize(self.WIDTH, self.HEIGHT)
         self.setWindowTitle("Citeos Demo")
@@ -35,6 +28,15 @@ class CiteosVision(QMainWindow):
             round(screenHeight / 2 - self.HEIGHT / 2),
             self.WIDTH, self.HEIGHT
         )
+
+        self.running_system = system()
+        self.version = pathlib.Path("./main.py").parent.absolute().__str__().split("/")[-1]
+        self.modelPath = "/home/thibault/Bureau/citeos-air-quality/models/LSTM_multi_with_target.h5"
+        self.csvUrl = "https://raw.githubusercontent.com/thibaultrichel/citeos-air-quality/main/data/final/merged" \
+                      "-final.csv "
+        self.columnsNames = ["Date", "PM10", "PM2.5", "NO2", "SO2", "NO", "NOX", "O3", "Temperature", "Wind speed",
+                             "Humidity", "Pressure", "Wind direction", "Weather event", "ATMO"]
+        self.df = None
 
         if self.running_system == "Darwin":  # MacOS
             titleFontSize = 28
@@ -60,9 +62,6 @@ class CiteosVision(QMainWindow):
         self.btnUploadData = QPushButton("Charger les données", self)
         self.btnUploadData.setGeometry(10, 100, 200, 50)
         self.btnUploadData.clicked.connect(lambda: self.csvToTable(self.csvUrl))
-
-        self.columnsNames = ["Date", "PM10", "PM2.5", "NO2", "SO2", "NO", "NOX", "O3", "Temperature", "Wind speed",
-                             "Humidity", "Pressure", "Wind direction", "Weather event", "ATMO"]
 
         self.table = QTableWidget(self)
         self.table.setColumnCount(15)
@@ -148,30 +147,6 @@ class CiteosVision(QMainWindow):
         X_test = self.df[-120:]
         X_test = np.expand_dims(X_test, axis=0)
         return X_test
-
-    @staticmethod
-    def getColorAndIcon(value):
-        color = ""
-        icon = None
-        if 0 < value <= 1:
-            color = "green"
-            icon = QPixmap("../images/icon-good.png")
-        elif 1 <= value < 2:
-            color = "blue"
-            icon = QPixmap("../images/icon-ok.png")
-        elif 2 <= value < 3:
-            color = "rgb(255, 212, 51)"
-            icon = QPixmap("../images/icon-warning-ok.png")
-        elif 3 <= value < 4:
-            color = "rgb(255, 131, 50)"
-            icon = QPixmap("../images/icon-warning.png")
-        elif 4 <= value < 5:
-            color = "red"
-            icon = QPixmap("../images/icon-bad.png")
-        elif value >= 5:
-            color = "purple"
-            icon = QPixmap("../../images/icon-rlybad.png")
-        return color, icon
 
     def displayPredictions(self):
         X_test = self.formatPredictionData()
