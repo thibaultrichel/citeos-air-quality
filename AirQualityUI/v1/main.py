@@ -1,12 +1,13 @@
 import sys
+import pathlib
 import numpy as np
 import pandas as pd
-from myfont import MyFont
+from AirQualityUI.utils.myfont import MyFont
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from platform import system
 from PyQt5.QtWidgets import *
-from utils_model import getPredictions, formatDataframe
+from AirQualityUI.utils.model_integration import getPredictions, formatDataframe
 
 
 class CiteosVision(QMainWindow):
@@ -19,6 +20,7 @@ class CiteosVision(QMainWindow):
         screenWidth = screenRect.width()
 
         self.running_system = system()
+        self.version = pathlib.Path("./main.py").parent.absolute().__str__().split("/")[-1]
         self.WIDTH = 1200
         self.HEIGHT = 650
         self.modelPath = "/home/thibault/Bureau/citeos-air-quality/models/LSTM_multi_with_target.h5"
@@ -78,16 +80,6 @@ class CiteosVision(QMainWindow):
         self.btnPredict.setEnabled(False)
         self.btnPredict.clicked.connect(self.displayPredictions)
 
-        # self.predLabel = QLabel("Prediction result : ", self)
-        # self.predLabel.setGeometry(380, 600, 180, 25)
-        # self.predLabel.setFont(self.boldFont)
-        # self.predLabel.setVisible(False)
-
-        # self.labelPrediction = QLabel(self)
-        # self.labelPrediction.setGeometry(580, 600, 300, 25)
-        # self.labelPrediction.setFont(self.boldFont)
-        # self.labelPrediction.setVisible(False)
-
         self.btnQuit = QPushButton("Quit", self)
         self.btnQuit.setGeometry(self.WIDTH - 110, 590, 100, 50)
         self.btnQuit.setFont(self.boldFont)
@@ -116,6 +108,11 @@ class CiteosVision(QMainWindow):
         logoEsme.setPixmap(pixmapEsme)
         logoEsme.resize(pixmapEsme.width(), pixmapEsme.height())
         logoEsme.setGeometry(self.WIDTH - pixmapEsme.width(), 40, pixmapEsme.width(), pixmapEsme.height())
+
+        labelVersion = QLabel(f"version: {self.version}", self)
+        labelVersion.setGeometry(1, 1, 63, 10)
+        labelVersion.setFont(MyFont(10, False, False, False))
+        labelVersion.setStyleSheet("color: grey")
 
     def autoResizeTable(self):
         self.header = self.table.horizontalHeader()
@@ -173,7 +170,7 @@ class CiteosVision(QMainWindow):
             icon = QPixmap("../images/icon-bad.png")
         elif value >= 5:
             color = "purple"
-            icon = QPixmap("../images/icon-rlybad.png")
+            icon = QPixmap("../../images/icon-rlybad.png")
         return color, icon
 
     def displayPredictions(self):
