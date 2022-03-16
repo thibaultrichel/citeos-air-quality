@@ -7,7 +7,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from platform import system
 from PyQt5.QtWidgets import *
-from AirQualityUI.utils.model_integration import getPredictions, formatDataframe
+from AirQualityUI.utils.model_integration import ModelUtil, formatDataframe
 
 
 class CiteosVision(QMainWindow):
@@ -37,6 +37,7 @@ class CiteosVision(QMainWindow):
         self.columnsNames = ["Date", "PM10", "PM2.5", "NO2", "SO2", "NO", "NOX", "O3", "Temperature", "Wind speed",
                              "Humidity", "Pressure", "Wind direction", "Weather event", "ATMO"]
         self.df = None
+        self.model = ModelUtil(self.modelPath)
 
         if self.running_system == "Darwin":  # MacOS
             titleFontSize = 28
@@ -150,7 +151,7 @@ class CiteosVision(QMainWindow):
 
     def displayPredictions(self):
         X_test = self.formatPredictionData()
-        y_pred = getPredictions(self.modelPath, X_test)
+        y_pred = self.model.getPredictions(X_test)
         value = np.round(y_pred[0][0], 2)
         message = f"ATMO index : {str(value)}"
         color, icon = self.getColorAndIcon(value)

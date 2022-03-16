@@ -10,7 +10,6 @@ class UserWindow(QMainWindow):
         super(UserWindow, self).__init__()
 
         self.callingWindow = callingWindow
-        self.callingWindow.setVisible(False)
 
         self.WIDTH = 500
         self.HEIGHT = 300

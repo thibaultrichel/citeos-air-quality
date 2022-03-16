@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import *
 from techwindow import TechWindow
 from userwindow import UserWindow
 from AirQualityUI.utils.myfont import MyFont
-from AirQualityUI.utils.model_integration import getPredictions, formatDataframe, getColorAndIcon
+from AirQualityUI.utils.model_integration import formatDataframe, getColorAndIcon, ModelUtil
 
 
 class CiteosVision(QMainWindow):
@@ -61,10 +61,13 @@ class CiteosVision(QMainWindow):
                       "-final.csv"
         self.columnsNames = ["Date", "PM10", "PM2.5", "NO2", "SO2", "NO", "NOX", "O3", "Temperature", "Wind speed",
                              "Humidity", "Pressure", "Wind direction", "Weather event", "ATMO"]
-        self.df = pd.read_csv(self.csvUrl, sep=';').dropna()
-        self.df = self.df[['date', 'PM10', 'PM25', 'NO2', 'SO2', 'NO', 'NOX', 'O3', 'temp', 'wind_speed', 'wind_dir',
-                           'hum', 'press', 'weather_event', 'ATMO']]
-        self.df = formatDataframe(self.df)
+        self.dfraw = pd.read_csv(self.csvUrl, sep=';').dropna()
+        self.dfraw = self.dfraw[
+            ['date', 'PM10', 'PM25', 'NO2', 'SO2', 'NO', 'NOX', 'O3', 'temp', 'wind_speed', 'wind_dir',
+             'hum', 'press', 'weather_event', 'ATMO']
+        ]
+        self.df = formatDataframe(self.dfraw, 1)
+        self.modelUtil = ModelUtil(self.modelPath)
 
     def set_basic_ui(self):
         title = QLabel("CiteosVision", self)
@@ -111,7 +114,8 @@ class CiteosVision(QMainWindow):
 
     def getPredictions(self):
         X_test = self.formatPredictionData()
-        y_pred = getPredictions(self.modelPath, X_test)
+        y_pred = self.modelUtil.getPredictions(X_test)
+        # y_pred = getPredictions(self.modelPath, X_test)
         value = np.round(y_pred[0][0], 2)
         color = getColorAndIcon(value)
         return value, color
