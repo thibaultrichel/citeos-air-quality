@@ -36,9 +36,11 @@ class CiteosVision(QMainWindow):
         self.version = pathlib.Path("main.py").parent.absolute().__str__().split("/")[-1]
 
         if self.running_system == "Darwin":  # MacOS
+            self.modelPath = "/Users/thibaultrichel/Desktop/JupyterLab/ProjetCITEOS/models/LSTM_multi_with_target.h5"
             titleFontSize = 28
             baseFontSize = 20
-        else:  # Linux or Windows
+        else:  # Linux
+            self.modelPath = "/home/thibault/Bureau/citeos-air-quality/models/LSTM_multi_with_target.h5"
             titleFontSize = 20
             baseFontSize = 12
         self.titleFont = MyFont(titleFontSize, True, False, True)
@@ -56,7 +58,6 @@ class CiteosVision(QMainWindow):
         self.btnUserWindow.setGeometry(self.WIDTH - 240, 130, 200, 40)
         self.btnUserWindow.clicked.connect(self.openUserWindow)
 
-        self.modelPath = "/home/thibault/Bureau/citeos-air-quality/models/LSTM_multi_with_target.h5"
         self.csvUrl = "https://raw.githubusercontent.com/thibaultrichel/citeos-air-quality/main/data/final/merged" \
                       "-final.csv"
         self.columnsNames = ["Date", "PM10", "PM2.5", "NO2", "SO2", "NO", "NOX", "O3", "Temperature", "Wind speed",
@@ -68,6 +69,8 @@ class CiteosVision(QMainWindow):
         ]
         self.df = formatDataframe(self.dfraw, 1)
         self.modelUtil = ModelUtil(self.modelPath)
+
+        self.setFocus()
 
     def set_basic_ui(self):
         title = QLabel("CiteosVision", self)

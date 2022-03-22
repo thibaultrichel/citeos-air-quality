@@ -2,6 +2,7 @@ import numpy as np
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from AirQualityUI.utils.myfont import MyFont
 from AirQualityUI.utils.model_integration import label_positions, advices, colors
 
 
@@ -48,12 +49,12 @@ class UserWindow(QMainWindow):
 
         self.textAdvice = QLabel("Conseil :", self)
         self.textAdvice.setGeometry(20, 200, 70, 30)
-        self.textAdvice.setFont(self.callingWindow.boldFont)
+        self.textAdvice.setFont(MyFont(16, True, False, False))
         self.textAdvice.setVisible(False)
 
         self.adviceLabel = QLabel(self)
         self.adviceLabel.setGeometry(90, 200, 500, 30)
-        self.adviceLabel.setFont(self.callingWindow.italicFont)
+        self.adviceLabel.setFont(MyFont(14, False, False, False))
         self.adviceLabel.setVisible(False)
 
     def set_basic_ui(self):

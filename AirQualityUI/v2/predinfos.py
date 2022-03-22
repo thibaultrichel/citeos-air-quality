@@ -58,7 +58,7 @@ class PredInfos(QMainWindow):
         nextDate = getDateNext12h(lastDate)
         Xpred = to_datetime(np.array([nextDate]))
         Ypred = np.array([pred])
-        plt.scatter(Xpred, Ypred, c=color, label="prediction")
+        plt.scatter(Xpred, Ypred, c="red", label="prediction")
         plt.title("Last 120h of ATMO index, and prediction for the next 12h")
         plt.xlabel("ATMO index")
         plt.ylabel("Date")

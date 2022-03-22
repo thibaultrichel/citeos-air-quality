@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 
 weather_event_cat = {
     'inconnu': 1, 'pluie faible': 2, 'ciel clair': 3, 'brouillard faible': 4, 'pluie': 5, 'brouillard': 6,

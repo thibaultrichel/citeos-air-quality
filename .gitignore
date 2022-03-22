@@ -7,5 +7,6 @@ data/opendata_txt_2020.zip
 /AirQualityUI/models/__pycache__/
 /AirQualityUI/v1/__pycache__/
 /AirQualityUI/v2/__pycache__/
+/AirQualityUI/v2/__pycache__/
 .idea/
 .DS_Store
