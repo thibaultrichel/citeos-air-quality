@@ -10,3 +10,4 @@ data/opendata_txt_2020.zip
 /AirQualityUI/v2/__pycache__/
 .idea/
 .DS_Store
+/WebUI/.idea/
