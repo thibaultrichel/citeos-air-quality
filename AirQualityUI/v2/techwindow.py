@@ -128,5 +128,5 @@ class TechWindow(QMainWindow):
 
     def showDetails(self):
         self.predInfosWindow = PredInfos(self, self.callingWindow)
-        self.predInfosWindow.show()
         self.popup.close()
+        self.predInfosWindow.show()

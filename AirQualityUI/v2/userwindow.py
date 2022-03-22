@@ -58,8 +58,8 @@ class UserWindow(QMainWindow):
         self.adviceLabel.setVisible(False)
 
     def set_basic_ui(self):
-        title = QLabel("UserVision", self)
-        title.setGeometry(round(self.WIDTH / 2 - 200 / 2), 10, 200, 40)
+        title = QLabel("ATMO index for the next 12h", self)
+        title.setGeometry(round(self.WIDTH / 2 - 400 / 2), 10, 400, 40)
         title.setAlignment(Qt.AlignCenter)
         title.setFont(self.callingWindow.titleFont)
 

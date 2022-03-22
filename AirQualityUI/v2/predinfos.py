@@ -3,6 +3,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from pandas import to_datetime
 from AirQualityUI.utils.model_integration import formatDataframe, getDateNext12h
 
@@ -15,7 +16,7 @@ class PredInfos(QMainWindow):
         self.callingWindow = callingWindow
 
         self.WIDTH = 800
-        self.HEIGHT = 500
+        self.HEIGHT = 600
 
         self.setFixedSize(self.WIDTH, self.HEIGHT)
         self.setWindowTitle("CiteosVision - Technical Window")
@@ -49,20 +50,24 @@ class PredInfos(QMainWindow):
         return df, gb
 
     def testPlot(self):
+        myFmt = mdates.DateFormatter('%d/%m/%Y %H:%M')
+        path = "../../images/figs/testfig.png"
         X = self.df.date[-120:]
         Y = self.df.atmo_cat[-120:]
         pred, color = self.mainWindow.getPredictions()
-        plt.figure(figsize=(12, 8))
+        f, ax = plt.subplots(figsize=(12, 10))
         plt.plot(X, Y, linestyle="-", marker='o', label="last 120h")
         lastDate = self.callingWindow.getLastDate()
         nextDate = getDateNext12h(lastDate)
         Xpred = to_datetime(np.array([nextDate]))
         Ypred = np.array([pred])
-        plt.scatter(Xpred, Ypred, c="red", label="prediction")
-        plt.title("Last 120h of ATMO index, and prediction for the next 12h")
-        plt.xlabel("ATMO index")
-        plt.ylabel("Date")
-        plt.legend()
-        path = "../../images/figs/testfig.png"
+        ax.scatter(Xpred, Ypred, c="red", label="prediction")
+        ax.set_title("Last 120h of ATMO index, and prediction for the next 12h")
+        ax.set_xlabel("ATMO index")
+        ax.set_ylabel("Date")
+        ax.xaxis.set_major_formatter(myFmt)
+        ax.xaxis.set_major_locator(mdates.HourLocator(interval=10))
+        ax.tick_params(axis='x', labelrotation=45)
+        ax.legend()
         plt.savefig(path, dpi=60)
         return QPixmap(path)
