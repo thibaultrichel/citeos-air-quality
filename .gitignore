@@ -11,3 +11,6 @@ data/opendata_txt_2020.zip
 .idea/
 .DS_Store
 /WebUI/.idea/
+/WebUI/node_modules/
+/WebUI/package.json
+/WebUI/yarn.lock
