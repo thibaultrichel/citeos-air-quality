@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap");
 
 body {
+    font-family: Montserrat, serif;
     margin: 0;
 }
 
@@ -22,8 +23,25 @@ body {
 .title {
     width: 100%;
     text-align: center;
-    font-family: Montserrat, serif;
     font-weight: 700;
     font-size: 2em;
-    padding: 10px;
+    padding: 20px 10px 10px;
+}
+
+.content {
+    padding: 30px;
+    display: grid;
+}
+
+.button {
+    width: 200px;
+    height: 50px;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+#pred-result {
+    padding: 20px;
+    font-weight: 300;
+    font-size: 1em;
 }
