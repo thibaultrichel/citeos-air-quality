@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>WebUI - Air Quality Citeos</title>
-    <script src="_bundle.js"></script>
+    <script src="scripts/require.js"></script>
+    <script>
+        require(['scripts/main'], function () {
+            displayPred();
+        });
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,8 +19,8 @@
     </div>
 
     <div class="content">
-<!--        <input class="button" type="button" value="Predict" onclick="displayPred()"/>-->
         <span id="pred-result"></span>
+        <span id="advice"></span>
     </div>
 </body>
 </html>

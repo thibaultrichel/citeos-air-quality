@@ -43,5 +43,11 @@ body {
 #pred-result {
     padding-top: 20px;
     font-weight: 300;
-    font-size: 1em;
+    font-size: 4em;
+}
+
+#advice {
+    padding-top: 20px;
+    font-weight: 300;
+    font-size: 2em;
 }
