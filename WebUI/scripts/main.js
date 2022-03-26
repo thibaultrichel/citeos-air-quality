@@ -7,25 +7,27 @@ async function getValue() {
     });
 }
 
-const getAdvice = (value) => {
-    const advices = {
-        1: "Bonne qualité de l'air :)",
-        2: "Qualité de l'air moyenne, privilégiez les transports",
-        3: "Qualité de l'air dégradée, évitez de prendre votre voiture",
-        4: "Mauvaise qualité de l'air, ne prenez pas votre voiture",
-        5: "Très mauvaise qualité de l'air, attention pour votre santé",
-        6: "Qualité de l'air excrécrable, mettez un masque"
+const getColorAndAdvice = (value) => {
+    const utils = {
+        1: ["Bonne qualité de l'air :)", "cyan"],
+        2: ["Qualité de l'air moyenne, privilégiez les transports", "lime"],
+        3: ["Qualité de l'air dégradée, évitez de prendre votre voiture", "yellow"],
+        4: ["Mauvaise qualité de l'air, ne prenez pas votre voiture", "orange"],
+        5: ["Très mauvaise qualité de l'air, attention pour votre santé", "red"],
+        6: ["Qualité de l'air excrécrable, mettez un masque", "purple"]
     }
     const intval = Math.round(value);
-    return advices[intval];
+    return utils[intval];
 };
 
 const getVal = () => {return 2.62};
 
 const displayPred = () => {
-    const base = "Prediction result : ";
     const val = getVal();
-    const adv = getAdvice(val);
-    document.getElementById("pred-result").innerHTML = base + "<b>" + val + "</b>";
-    document.getElementById("advice").innerHTML = adv;
+    const utils = getColorAndAdvice(val);
+    const advice = utils[0];
+    const color = utils[1];
+    document.getElementById("pred-result").innerHTML = val.toString();
+    document.getElementById("pred-result").style.backgroundColor = color;
+    document.getElementById("advice").innerHTML = advice;
 };

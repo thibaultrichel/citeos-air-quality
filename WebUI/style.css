@@ -24,8 +24,8 @@ body {
     width: 100%;
     text-align: center;
     font-weight: 700;
-    font-size: 2em;
-    padding: 20px 10px 10px;
+    font-size: 2.5em;
+    padding: 15px 10px 10px;
 }
 
 .content {
@@ -40,14 +40,24 @@ body {
     font-size: 1em;
 }
 
-#pred-result {
+.content {
     padding-top: 20px;
     font-weight: 300;
     font-size: 4em;
+    display: flex;
+    alignment: center;
+}
+
+#pred-result {
+    font-weight: 700;
+    border-radius: 25px;
+    padding: 5px 30px;
+    margin-left: 30px;
+    border: 3px solid black;
 }
 
 #advice {
-    padding-top: 20px;
+    padding: 20px 40px;
     font-weight: 300;
     font-size: 2em;
 }
