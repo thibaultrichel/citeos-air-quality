@@ -1,0 +1,33 @@
+.content {
+    display: grid;
+}
+
+.big-content {
+    height: 400px;
+    alignment: center;
+    padding-top: 200px;
+    padding-left: 5%;
+}
+
+.content {
+    padding: 20px 30px 30px;
+    font-weight: 300;
+    font-size: 4em;
+    display: flex;
+    alignment: center;
+}
+
+#pred-result {
+    font-weight: 700;
+    border-radius: 25px;
+    padding: 5px 30px;
+    margin-left: 30px;
+    border: 3px solid black;
+    text-align: center;
+}
+
+#advice {
+    padding: 20px 40px;
+    font-weight: 300;
+    font-size: 1.8em;
+}

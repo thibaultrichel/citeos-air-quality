@@ -1,28 +1,20 @@
-import os
-import sys
-
-print("test")
-os.system("jptenv")
-# import json
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-from tensorflow.keras.models import load_model
-import pandas as pd
+import json
 import numpy as np
+import pandas as pd
+from keras.models import load_model
+import os
+
 
 
 def loadModel():
-    path = "/Users/thibaultrichel/Desktop/JupyterLab/ProjetCITEOS/WebUI/model_utils/LSTM_multi_with_target.h5"
+    path = "./models/LSTM_multi_with_target.h5"
     return load_model(path)
 
 
 def getPredictions(data):
     model = loadModel()
     y_pred = model.predict(data)
-    val = y_pred[0][0]
-    output = {
-        "result": val
-    }
-    return val
+    return {"result": str(y_pred[0][0])}
 
 
 weather_event_cat = {
@@ -50,7 +42,9 @@ n_future = 12
 X_val = np.array(values[train_size:train_size + n_past])
 X_val = np.expand_dims(X_val, axis=0)
 
-print(getPredictions(X_val))
+output = getPredictions(X_val)
+print(output)
 
-
-
+with open("./result.json", "w") as file:
+    file.write(json.dumps(output, indent=4))
+file.close()
