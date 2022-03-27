@@ -7,7 +7,7 @@ import os
 
 
 def loadModel():
-    path = "./models/LSTM_multi_with_target.h5"
+    path = "../reactapp/src/models/LSTM_multi_with_target.h5"
     return load_model(path)
 
 
@@ -45,6 +45,6 @@ X_val = np.expand_dims(X_val, axis=0)
 output = getPredictions(X_val)
 print(output)
 
-with open("./result.json", "w") as file:
+with open("../reactapp/src/result.json", "w") as file:
     file.write(json.dumps(output, indent=4))
 file.close()
