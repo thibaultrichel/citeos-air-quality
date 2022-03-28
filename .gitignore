@@ -14,3 +14,4 @@ data/opendata_txt_2020.zip
 /WebUI/node_modules/
 /WebUI/package.json
 /WebUI/yarn.lock
+/fastAPI/__pycache__/

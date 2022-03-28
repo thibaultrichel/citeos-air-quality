@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Navbar from './navbar';
 import reportWebVitals from './reportWebVitals';
-import Content from "./content";
+import Prediction from "./prediction";
 
 
 ReactDOM.render(
     <React.StrictMode>
         <Navbar />
-        <Content />
+        <Prediction />
     </React.StrictMode>,
     document.getElementById('root')
 );
