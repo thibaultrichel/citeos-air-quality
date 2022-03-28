@@ -36,7 +36,7 @@ class CiteosVision(QMainWindow):
         self.version = pathlib.Path("main.py").parent.absolute().__str__().split("/")[-1]
 
         if self.running_system == "Darwin":  # MacOS
-            self.modelPath = "/Users/thibaultrichel/Desktop/JupyterLab/ProjetCITEOS/models/LSTM_multi_with_target.h5"
+            self.modelPath = "../../models/LSTM_multi_with_target.h5"
             titleFontSize = 28
             baseFontSize = 20
         else:  # Linux
