@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebUI - Air Quality Citeos</title>
+    <script src="scripts/require.js"></script>
+    <script>
+        require(['scripts/main'], function () {
+            displayPred();
+        });
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav-container">
+    <img class="logo-citeos" src="images/citeos.png" width="215" height="48" alt="Citeos Logo">
+    <div class="title">CiteosVision</div>
+    <img src="images/esme.png" class="logo-esme" width="80" height="80" alt="ESME Logo">
+</div>
+
+<div class="big-content">
+    <div class="content">
+        <span id="label">ATMO index for the next 12h : </span>
+        <span id="pred-result"></span>
+    </div>
+    <span id="advice"></span>
+</div>
+</body>
+</html>
